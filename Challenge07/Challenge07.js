@@ -140,7 +140,7 @@ const applicationsStatics = (arr) => {
         result.java_Devs=result.java_Devs+1;
         if(res.tech==".Net")
         result.dotNet_Devs=result.dotNet_Devs+1;
-        if((res.firstName==null && res.lastName==null) || res.yearsOfExperience<1)
+        if((res.firstName==null || res.lastName==null) || res.yearsOfExperience<1)
         result.rejectedApplicants=result.rejectedApplicants+1;
         // if(res.yearsOfExperience<1)
         // result.rejectedApplicants=result.rejectedApplicants+1;
@@ -272,7 +272,24 @@ let data = {
 //  2- You need to round the average to the nearest lower number 
 
 const classesAvg = (data) => {
-    
+    let sum;
+    let count;
+    for(var i=0 ; i<data.grades.length ; i++)
+    {
+        for(var j=0 ; j<data.grades[i].classes.length ; j++)
+        {
+            sum=0;
+            count=0;
+            for(var t=0 ; t<data.grades[i].classes[j].classScores.length ; t++)
+            {
+                sum+=data.grades[i].classes[j].classScores[t];
+                count++;
+            }
+            data.grades[i].classes[j].avg=Math.floor(sum/count);
+        }
+    }
+
+    return data;
 };
 
 module.exports = { objLat, cvFormatter, applicationsStatics, classesAvg };
